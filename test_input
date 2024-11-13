@@ -1,0 +1,17 @@
+OPENQASM 2.0;
+include "qelib1.inc";
+gate unitary q0 { u(1.995349893109148,-3.6559940173519574,0.9292383398786828) q0; }
+gate multiplexer_dg q0 { unitary q0; }
+gate isometry_to_uncompute_dg q0 { multiplexer_dg q0; }
+gate state_preparation(param0,param1) q0 { isometry_to_uncompute_dg q0; }
+gate initialize(param0,param1) q0 { reset q0; state_preparation(0.1116694386974314+0.5306344554553869j,-0.555171870025106-0.6306672703394339j) q0; }
+qreg q2[3];
+creg c1[1];
+initialize(0.1116694386974314+0.5306344554553869j,-0.555171870025106-0.6306672703394339j) q2[0];
+h q2[1];
+cx q2[1],q2[2];
+cx q2[0],q2[1];
+h q2[0];
+cx q2[1],q2[2];
+cz q2[0],q2[2];
+measure q2[2] -> c1[0];
